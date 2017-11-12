@@ -99,13 +99,13 @@ def int_bandwidth_usage(hostname, interface_name=None, poll_interval=10, interfa
   '''
     if interface_name != None and interface_oid == None:
 	   try:
-         data_one=snmp_walk('IF-MIB::ifDescr', hostname=hostname, community=community, version=version)
+              data_one=snmp_walk('IF-MIB::ifDescr', hostname=hostname, community=community, version=version)
 	   except EasySNMPTimeoutError as e:
 	      return json.dumps(e.message)
     elif interface_oid != None and interface_name == None:
 	   try:
-         data_one=snmp_walk('ifName', hostname=hostname, community=community, version=version)
-       except EasySNMPTimeoutError as e:
+              data_one=snmp_walk('ifName', hostname=hostname, community=community, version=version)
+           except EasySNMPTimeoutError as e:
 	      return json.dumps(e.message)
 	output = []
     for i in data_one:
@@ -114,9 +114,9 @@ def int_bandwidth_usage(hostname, interface_name=None, poll_interval=10, interfa
       temp_dict["OID"]=i.oid_index
       output.append(temp_dict)
     if [d["OID"] for d in output if d["interface-name"] == interface_name]:
-      oid=[d["OID"] for d in output if d["interface-name"] == interface_name][0]
-	else:
-	  return json.dumps("No valid Interface or OID found.")
+        oid=[d["OID"] for d in output if d["interface-name"] == interface_name][0]
+    else:
+	return json.dumps("No valid Interface or OID found.")
     #for i in data_two:
     #  if i.value == interface_name:
     #     oid=i.oid_index
